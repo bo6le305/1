@@ -7,49 +7,55 @@
         body {
             margin: 0;
             padding: 0;
-            background: url('https://i.pinimg.com/originals/51/ae/a3/51aea3393b8234a1e69d8713a0a58bc3.gif') no-repeat center center fixed;
-            background-size: cover;
             font-family: 'Courier New', Courier, monospace;
             color: #0000ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
-            flex-direction: column;
-            text-align: center;
+            overflow: hidden;
         }
+
         .image-container img {
-            width: 750px; 
-            height: auto;
-            border: 2px solid #0000ff; 
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 255, 0.7); 
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: block;
         }
-        .info {
-            margin-top: 20px;
-            font-size: 0.75em; /* Reduced from 1.5em */
+
+        .info, .text {
+            position: absolute;
+            z-index: 1;
             color: #0000ff; 
             text-shadow: 0px 0px 8px #0000ff, 0px 0px 15px #0000ff, 0px 0px 25px #0000ff; 
             letter-spacing: 4.5px; 
+        }
+
+        .info {
+            top: 10px;
+            left: 10px;
+            font-size: 0.75em;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 8px;
             white-space: pre-wrap;
         }
+
         .text {
-            margin-top: 20px;
-            font-size: 1.5em; /* Reduced from 3em */
-            color: #0000ff; 
-            text-shadow: 0px 0px 8px #0000ff, 0px 0px 15px #0000ff, 0px 0px 25px #0000ff; 
-            letter-spacing: 4.5px; 
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 3em;
         }
     </style>
 </head>
 <body>
     <div class="image-container">
-        <img src="https://s4.ezgif.com/tmp/ezgif-47620117e08bac.png" alt="Discord Image">
+        <img src="https://s4.ezgif.com/tmp/ezgif-41f1ed59a1b168.png" alt="Discord Image">
     </div>
+
     <audio autoplay loop>
-        <source src="https://jumpshare.com/s/DHytOt9bvDPduaf5DhmW" type="audio/mpeg">
+        <source src="https://cdn.discordapp.com/attachments/1122483964431585362/1387727097383878706/xejrs9R.mp4?ex=688a8f52&is=68893dd2&hm=3c08d3067a5695562d8696fc1b2f80335022e9d86b9a03b6b00faaefd6ff0473&" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
     <div class="info" id="ip-info">
         <strong>IP: <span id="ip"></span></strong><br>
         <span><strong>City:</strong> <span id="city"></span></span><br>
@@ -59,15 +65,20 @@
         <span><strong>Organization:</strong> <span id="org"></span></span><br>
         <span><strong>Timezone:</strong> <span id="timezone"></span></span>
     </div>
+
     <div class="text">المطران كل مكان</div>
 
     <script>
         fetch('https://ipinfo.io/json')
         .then(response => response.json())
         .then(data => {
-            delete data.readme;
-            const infoDiv = document.getElementById('ip-info');
-            infoDiv.textContent = JSON.stringify(data, null, 2);
+            document.getElementById('ip').textContent = data.ip || '';
+            document.getElementById('city').textContent = data.city || '';
+            document.getElementById('region').textContent = data.region || '';
+            document.getElementById('country').textContent = data.country || '';
+            document.getElementById('loc').textContent = data.loc || '';
+            document.getElementById('org').textContent = data.org || '';
+            document.getElementById('timezone').textContent = data.timezone || '';
         });
     </script>
 </body>
